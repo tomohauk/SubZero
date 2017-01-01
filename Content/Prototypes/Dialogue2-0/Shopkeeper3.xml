@@ -1,0 +1,86 @@
+<DialogueDatabase version="2.0.0.1">
+
+	<!-- Greeting Topics-->
+	<Topic id="0" Type="TT_Greeting">
+		<Name str="Hi There"/>
+		<Text>Hello My Friend</Text>
+		<ChildTopics num="0"></ChildTopics>
+		<ParentTopic prt="nullptr"/>
+		<URL str="None"/>
+	</Topic>
+	<Topic id="1" Type="TT_Greeting">
+		<Name str="Hello"/>
+		<Text>Yes?</Text>
+		<ChildTopics num="0"></ChildTopics>
+		<ParentTopic prt="nullptr"/>
+		<URL str="None"/>
+	</Topic>
+	<Topic id="2" Type="TT_Greeting">
+		<Name str="Yo"/>
+		<Text>What Do You Want?</Text>
+		<ChildTopics num="0"></ChildTopics>
+		<ParentTopic ptr="nullptr"/>
+		<URL str="None"/>
+	</Topic>
+	<Topic id="3" Type="TT_Greeting">
+		<Name str="What's Up?"/>
+		<Text>Im surrounded by 4 walls, and people I don't really like. Now you tell me what's up.</Text>
+		<ChildTopics num="0"></ChildTopics>
+		<ParentTopic ptr="nullptr"/>
+		<URL str="None"/>
+	</Topic>
+
+	<!-- Menu Item Topics-->
+	<Topic id="4" Type="TT_Category">
+		<Name str="The Guy in the combat zone?"/>
+		<Text>I'm not too sure what he is up to, but I'm sure it will end badly for him.</Text>
+		<ChildTopics num="0"></ChildTopics>
+		<ParentTopic ptr="nullptr"/>
+		<URL str="None"/>
+	</Topic>
+	<Topic id="5" Type="TT_Category">
+		<Name str="Shopkeepers"/>
+		<Text>Apparently I'm the only one here, though I'm hoping for more to arrive soon. If only.</Text>
+		<ChildTopics num="0"></ChildTopics>
+		<ParentTopic ptr="nullptr"/>
+		<URL str="None"/>
+	</Topic>
+	<!-- Test Menu Item with Children-->
+	<Topic id="6" Type="TT_Category">
+		<Name str="Map Zones?"/>
+		<Text>Yes, there are a few zones available to acsses. </Text>
+		<ChildTopics num="3">
+			<Topic id="7" Type="TT_General">
+				<Name str="Combat Zone"/>
+				<Text>The combat zone speaks for itself. It's where you go to enter combat with someone.</Text>
+				<ChildTopics num="0"></ChildTopics>
+				<ParentTopic ptr="5"/>
+				<URL str="None"/>
+			</Topic>
+			<Topic id="8" Type="TT_General">
+				<Name str="Shop District"/>
+				<Text>I heard that the shop district is going to be the only one of its kind.</Text>
+				<ChildTopics num="0"></ChildTopics>
+				<ParentTopic ptr="5"/>
+				<URL str="None"/>
+			</Topic>
+			<Topic id="9" Type="TT_Category">
+				<Name str="Abandoned District"/>
+				<Text>I'm not sure what went on there, but it's been abandoned for a very long time.</Text>
+				<ChildTopics num="1">
+						<Topic id="10" Type="TT_Category">
+							<Name str="Map 17"/>
+							<Text>It's quite small, we are looking forward to the upgrade coming soon.</Text>
+							<ChildTopics num="0"></ChildTopics>
+							<ParentTopic ptr="8"/>
+							<URL str="None"/>
+						</Topic>
+				</ChildTopics>
+				<ParentTopic ptr="5"/>
+				<URL str="None"/>
+			</Topic>
+		</ChildTopics>
+		<ParentTopic ptr="nullptr"/>
+		<URL str="None"/>
+	</Topic>
+</DialogueDatabase>

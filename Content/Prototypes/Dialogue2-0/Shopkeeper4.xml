@@ -1,0 +1,46 @@
+<DialogueDatabase version="2.0.0.1">
+	<!-- Greeting Topics-->
+	<Topic id="0" Type="TT_Greeting">
+		<Name str="Hi There"/>
+		<Text>Hello My Friend</Text>
+		<ChildTopics num="0"></ChildTopics>
+		<ParentTopic prt="nullptr"/>
+		<URL str="None"/>
+	</Topic>
+	<Topic id="1" Type="TT_Greeting">
+		<Name str="Hello"/>
+		<Text>Yes?</Text>
+		<ChildTopics num="0"></ChildTopics>
+		<ParentTopic prt="nullptr"/>
+		<URL str="None"/>
+	</Topic>
+	<Topic id="2" Type="TT_Greeting">
+		<Name str="Yo"/>
+		<Text>What Do You Want?</Text>
+		<ChildTopics num="0"></ChildTopics>
+		<ParentTopic ptr="nullptr"/>
+		<URL str="None"/>
+	</Topic>
+	<Topic id="3" Type="TT_Greeting">
+		<Name str="What's Up?"/>
+		<Text>Im surrounded by 4 walls, and people I don't really like. Now you tell me what's up.</Text>
+		<ChildTopics num="0"></ChildTopics>
+		<ParentTopic ptr="nullptr"/>
+		<URL str="None"/>
+	</Topic>
+	<!-- Menu Item Topics-->
+	<Topic id="4" Type="TT_Category">
+		<Name str="Shopkeeper 3?"/>
+		<Text>Yes, he is quite strange isn't he. I havn't really gotten to know him yet, but he is a bit suspicious.</Text>
+		<ChildTopics num="0"></ChildTopics>
+		<ParentTopic ptr="nullptr"/>
+		<URL str="None"/>
+	</Topic>
+	<Topic id="5" Type="TT_Category">
+		<Name str="Map 17"/>
+		<Text>I don't really like it here, the place is too small. I heard Shopkeeper3 saying that the place will be expanding soon.</Text>
+		<ChildTopics num="0"></ChildTopics>
+		<ParentTopic ptr="nullptr"/>
+		<URL str="None"/>
+	</Topic>
+</DialogueDatabase>

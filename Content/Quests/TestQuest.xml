@@ -1,0 +1,38 @@
+<Quest name="Test Quest" id="tq001">
+  <Conditions><!--The conditions in which the quest will be completed-->
+    <!--
+    - e is ==
+    - le is <=
+    - ge is >=
+    - lt is <
+    - gt is >
+    - ne is !=
+    -->
+    <HasItem itemId="62734"/><!--If the item has the item of id in their inventory. Suites simple fetch quests-->
+    <IsTrue condition="e" variable="playerHealth" value="10"/><!--The Players health is a certain value-->
+    <IsFalse condition = "le" variable="playerStamina" value="10"/>
+    <StageCompleted id="0"/><!--If the stage with this ID has been completed-->
+  </Conditions>
+
+  <!--
+  - id is the order of the stages, so 0 is first and 0^n is the last stage
+  - name is the stages name, e.g Find the Next Box Item
+  
+  -->
+  
+  <Stage id="0" name="Find Item X">
+    <Dialogue>
+      <!--Dialogue to add to players-->  
+    </Dialogue>
+
+    <Commands>
+      <Command cmdString="nextStage">
+        <!--So execute command if certain condition has been met-->
+          <HasItem itemID="62734"/>
+      </Command>  
+    </Commands>      
+
+    
+  </Stage>
+  
+</Quest>

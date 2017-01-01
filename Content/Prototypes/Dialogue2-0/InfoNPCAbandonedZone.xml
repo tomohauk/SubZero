@@ -1,0 +1,26 @@
+<DialogueDatabase version="2.0.0.1">
+	<!-- Greeting Topics-->
+	<Topic id="0" Type="TT_Greeting">
+		<Name str="Stop!!"/>
+		<Text>Stop!!</Text>
+		<ChildTopics num="0"></ChildTopics>
+		<ParentTopic prt="nullptr"/>
+		<URL str="None"/>
+	</Topic>
+	<!-- Menu Item Topics-->
+	<Topic id="1" Type="TT_Category">
+		<Name str="What's Wrong?"/>
+		<Text>The Abandoned Zone lays beyong this point!</Text>
+		<ChildTopics num="1">
+			<Topic id="2" Type="TT_General">
+				<Name str="Abandoned Zone?"/>
+				<Text>Yes... The Abandoned Zone. If you pass this point, we do-not and cannot quaruentee your safety. Enter at your own RISK.</Text>
+				<ChildTopics num="0"></ChildTopics>
+				<ParentTopic ptr="nullptr"/>
+				<URL str="None"/>
+			</Topic>
+		</ChildTopics>
+		<ParentTopic ptr="nullptr"/>
+		<URL str="None"/>
+	</Topic>
+</DialogueDatabase>

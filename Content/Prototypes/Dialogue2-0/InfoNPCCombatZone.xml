@@ -1,0 +1,18 @@
+<DialogueDatabase version="2.0.0.1">
+	<!-- Greeting Topics-->
+	<Topic id="0" Type="TT_Greeting">
+		<Name str="Halt! The Combat Zone lays ahead."/>
+		<Text>Halt! The Combat Zone lays ahead.</Text>
+		<ChildTopics num="0"></ChildTopics>
+		<ParentTopic prt="nullptr"/>
+		<URL str="None"/>
+	</Topic>
+	<!-- Menu Item Topics-->
+	<Topic id="1" Type="TT_Category">
+		<Name str="Combat Zone?"/>
+		<Text>Beware, the Combat Zone is not for the faint hearted. If you enter, you could die if you are not prepared!</Text>
+		<ChildTopics num="0"></ChildTopics>
+		<ParentTopic ptr="nullptr"/>
+		<URL str="None"/>
+	</Topic>
+</DialogueDatabase>
