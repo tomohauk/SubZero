@@ -1,0 +1,10 @@
+## Sub Zero ignores ##
+.vs/**
+Intermediate/**
+Binaries/**
+Saved/**
+*.opensdf
+*.sln
+*.sdf
+Plugins/**/Intermediate/**
+Plugins/**/Binaries/**
