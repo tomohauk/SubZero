@@ -7,7 +7,7 @@
 
 /*
 * The Quest Builder will read all of the quest xml files
-* and construct them in the Quest Database and add dialogue
+* and construct them and add them to the Quest Database and add dialogue
 * to the npcs dialogue database and other quest data to
 * various other systems.
 */

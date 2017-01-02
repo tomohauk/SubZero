@@ -6,9 +6,6 @@
 #include "Runtime/Core/Public/HAL/FileManagerGeneric.h"
 #include "QuestBuilder.h"
 
-
-
-
 UQuestBuilder::UQuestBuilder(const class FObjectInitializer & objectInitializer)
 {
 	QuestDirPath = "Quests/";
