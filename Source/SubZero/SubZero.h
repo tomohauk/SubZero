@@ -10,6 +10,7 @@
 #include "Runtime/UMG/Public/Slate/SObjectWidget.h"
 #include "Runtime/UMG/Public/IUMGModule.h"
 #include "Runtime/UMG/Public/Blueprint/UserWidget.h"
+#include "Runtime/XmlParser/Public/XmlParser.h"
 
 #define PRINTSTRING(pString) GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, pString)
 

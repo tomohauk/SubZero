@@ -21,6 +21,6 @@ class SUBZERO_API UQuestConditionSystem : public UObject
 public:
 
 	static bool Evaluate(FString ConditionString);
-	
+	static void BuildConditionString(TArray<FString> & outConditions, FXmlNode * inNode);
 	
 };

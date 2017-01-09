@@ -20,3 +20,47 @@ bool UQuestConditionSystem::Evaluate(FString ConditionString)
 	}
 	return true;
 }
+
+void UQuestConditionSystem::BuildConditionString(TArray<FString> & outConditions, FXmlNode * inNode)
+{
+	if (!inNode->GetTag().Equals("Conditions"))
+	{
+		return;
+	}
+
+	for (FXmlNode * conditionNodes : inNode->GetChildrenNodes())
+	{
+		FString conditionStr;
+
+		if (conditionNodes->GetTag().Equals("HasItem"))
+		{
+			conditionStr += "HasItem,";
+			conditionStr += conditionNodes->GetAttribute("itemId");
+		}
+		else if (conditionNodes->GetTag().Equals("IsTrue"))
+		{
+			conditionStr += "IsTrue,";
+			conditionStr += conditionNodes->GetAttribute("condition") + ",";
+			conditionStr += conditionNodes->GetAttribute("variable") + ",";
+			conditionStr += conditionNodes->GetAttribute("value");
+		}
+		else if (conditionNodes->GetTag().Equals("IsFalse"))
+		{
+			conditionStr += "IsFalse,";
+			conditionStr += conditionNodes->GetAttribute("condition") + ",";
+			conditionStr += conditionNodes->GetAttribute("variable") + ",";
+			conditionStr += conditionNodes->GetAttribute("value");
+		}
+		else if (conditionNodes->GetTag().Equals("StageComplete"))
+		{
+			conditionStr += "StageComplete,";
+			conditionStr += conditionNodes->GetAttribute("id");
+		}
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Unknown Quest Condition!"));
+		}
+
+		outConditions.Add(conditionStr);
+	}
+}

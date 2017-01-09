@@ -5,6 +5,7 @@
 #include "Runtime/XmlParser/Public/XmlParser.h"
 #include "Runtime/Core/Public/HAL/FileManagerGeneric.h"
 #include "QuestBuilder.h"
+#include "QuestConditionSystem.h"
 
 UQuestBuilder::UQuestBuilder(const class FObjectInitializer & objectInitializer)
 {
@@ -81,7 +82,7 @@ struct FQuestStages
 	int32 StageId;
 	FString StageName;
 	TArray<FString> Dialogue;
-	TArray<FCommands> Commands;
+	TArray<FCommands*> Commands;
 };
 
 struct FQuest
@@ -89,7 +90,7 @@ struct FQuest
 	FString QuestID;
 	FString QuestName;
 	TArray<FString> QuestConditions;
-	TArray<FQuestStages> QuestStages;
+	TArray<FQuestStages*> QuestStages;
 };
 
 void UQuestBuilder::CreateQuests()
@@ -107,66 +108,90 @@ void UQuestBuilder::CreateQuests()
 
 		FQuest * tmpNewQuest = new FQuest;
 
+		tmpNewQuest->QuestID = file->GetRootNode()->GetAttribute("id");
+		tmpNewQuest->QuestName = file->GetRootNode()->GetAttribute("name");
+
 		//Reads the quest nodes inside the <Quest> tag
 		for (FXmlNode * node : file->GetRootNode()->GetChildrenNodes())
 		{
+			
 			if (node->GetTag().Equals("Conditions"))
 			{
-				for (FXmlNode * conditionNodes : node->GetChildrenNodes())
-				{
-					UE_LOG(LogTemp, Warning, TEXT("In XML Conditions"));
-					FString conditionStr;
-
-					if (conditionNodes->GetTag().Equals("HasItem"))
-					{
-						conditionStr += "HasItem,";
-						conditionStr += conditionNodes->GetAttribute("itemId");
-					}
-					else if (conditionNodes->GetTag().Equals("IsTrue"))
-					{
-						conditionStr += "IsTrue,";
-						conditionStr += conditionNodes->GetAttribute("condition") + ",";
-						conditionStr += conditionNodes->GetAttribute("variable") + ",";
-						conditionStr += conditionNodes->GetAttribute("value");
-					}
-					else if (conditionNodes->GetTag().Equals("IsFalse"))
-					{
-						conditionStr += "IsFalse,";
-						conditionStr += conditionNodes->GetAttribute("condition") + ",";
-						conditionStr += conditionNodes->GetAttribute("variable") + ",";
-						conditionStr += conditionNodes->GetAttribute("value");
-					}
-					else if (conditionNodes->GetTag().Equals("StageComplete"))
-					{
-						conditionStr += "StageComplete,";
-						conditionStr += conditionNodes->GetAttribute("id");
-					}
-					else
-					{
-						UE_LOG(LogTemp, Warning, TEXT("Unknown Quest Condition!"));
-					}
-
-					UE_LOG(LogTemp, Warning, TEXT("%s"), *conditionStr);
-				}
+				//Read 'Conditions' nodes
+				UQuestConditionSystem::BuildConditionString(tmpNewQuest->QuestConditions, node);
 			}
 			else if (node->GetTag().Equals("Stage"))
 			{
-
+				Internal_ReadQuestStage(tmpNewQuest->QuestStages, node);
 			}
 			else
 			{
 
 			}
 		}
+
+		//Add new quest to quest db
+
+		/* BEGINE TESTING READING QUEST - REMOVE AFTER TESTING */
+		UE_LOG(LogTemp, Warning, TEXT("Quest Id: %s \n Quest Name: %s"), *tmpNewQuest->QuestID, *tmpNewQuest->QuestName);
+		
+		for (FString con : tmpNewQuest->QuestConditions)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Condition: %s"), *con);
+		}
+
+		for (FQuestStages * qs : tmpNewQuest->QuestStages)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Stage Id: %i \n Stage Name: %s"), qs->StageId, *qs->StageName);
+		}
+		/* END TESTING */
 	}
 }
 
-void UQuestBuilder::Internal_ReadQuestConditions()
+void UQuestBuilder::Internal_ReadQuestStage(TArray<struct FQuestStages*> & outStages, FXmlNode * inNode)
 {
+	if (!inNode->GetTag().Equals("Stage"))
+	{
+		//Not a quest stage
+		return;
+	}
 
-}
+	FQuestStages * tmpQuestStage = new FQuestStages;
 
-void UQuestBuilder::Internal_ReadQuestStage()
-{
+	tmpQuestStage->StageId = FCString::Atoi(*inNode->GetAttribute("id"));
+	tmpQuestStage->StageName = inNode->GetAttribute("name");
 
+	for (FXmlNode * children : inNode->GetChildrenNodes())
+	{
+		if (children->GetTag().Equals("Dialogue"))
+		{
+			for (FXmlNode * dialogueNode : children->GetChildrenNodes())
+			{
+				//read dialogue nodes
+			}
+		}
+		else if (children->GetTag().Equals("Commands"))
+		{
+			for (FXmlNode * cmdNode : children->GetChildrenNodes())
+			{
+				FCommands * newCmd = new FCommands;
+				newCmd->CommandString = cmdNode->GetAttribute("cmdString");
+
+				for (FXmlNode * cmdConditions : cmdNode->GetChildrenNodes())
+				{
+					UQuestConditionSystem::BuildConditionString(newCmd->Conditions, cmdConditions);
+				}
+
+				tmpQuestStage->Commands.Add(newCmd);
+			}
+		}
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Unknown Quest Stage Node"));
+		}
+	}
+
+	outStages.Add(tmpQuestStage);
+
+	return;
 }

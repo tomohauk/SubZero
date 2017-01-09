@@ -44,8 +44,6 @@ public: /* XML Functions and vars*/
 	//Reads through all of the XML files in QuestXMLFiles array
 	void CreateQuests();
 
-	//Internal Read Quest Conditions
-	void Internal_ReadQuestConditions();
 	//Internal Read Quest Stage
-	void Internal_ReadQuestStage();
+	void Internal_ReadQuestStage(TArray<struct FQuestStages*> & outStages, FXmlNode * inNode);
 };
