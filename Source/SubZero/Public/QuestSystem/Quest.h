@@ -6,7 +6,7 @@
 #include "Quest.generated.h"
 
 /**
- * 
+ * Main Quest Class
  */
 UCLASS()
 class SUBZERO_API UQuest : public UObject

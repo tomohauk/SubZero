@@ -88,7 +88,7 @@ bool UQuestObjectFactory::FactoryCanImport(const FString& Filename)
 
 FText UQuestObjectFactory::GetDisplayName() const
 {
-	return FText();
+	return FText::FromString("Quest");
 }
 
 #undef LOCTEXT_NAMESPACE

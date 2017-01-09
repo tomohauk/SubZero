@@ -29,62 +29,135 @@ void UQuestBuilder::ReadQuestDir(TArray<FXmlFile*> & outFiles)
 	if (!FPaths::DirectoryExists(GetQuestDirPath()))
 		return;
 
+	FString QuestPath = GetQuestDirPath();
+
 	FString fileExtension = ".xml";
 
 	//Normalize the / and \ 
-	FPaths::NormalizeDirectoryName(QuestDirPath);
+	FPaths::NormalizeDirectoryName(QuestPath);
 
 	//Get the file manager by reference
 	IFileManager & fileManager = IFileManager::Get();
 
-	FString FinalPath = QuestDirPath + "/" + fileExtension;
+	FString FinalPath = QuestPath + "/";
 
 	//Generic file paths of every xml file in Quests folder
 	TArray<FString> files;
 
-	//Find all the files and store the path to the files
-	fileManager.FindFiles(files, *FinalPath, true, false);
+	UE_LOG(LogTemp, Warning, TEXT("Path: %s"), *FinalPath);
 
+	//Find all the files and store the path to the files
+	fileManager.FindFiles(files, *FinalPath, TEXT(".xml"));
 	for (FString strFile : files)//Iterate and read the xml files
 	{
-		if (!FPaths::FileExists(strFile))
+		if (!FPaths::FileExists(FinalPath + strFile))
 			return;
 
-		FXmlFile * xmlFile = new FXmlFile(strFile, EConstructMethod::ConstructFromFile);
+		UE_LOG(LogTemp, Warning, TEXT("Path: %s"), *(FinalPath + strFile));
 
-		if (xmlFile->IsValid())
+		FXmlFile * xmlFile = new FXmlFile(FinalPath + strFile, EConstructMethod::ConstructFromFile);
+
+		if (xmlFile->IsValid() && xmlFile->GetRootNode()->GetTag().Equals("Quest"))
 		{
 			outFiles.Add(xmlFile);
+			UE_LOG(LogTemp, Warning, TEXT("xmlFile is valid!"));
 		}
 		else
 		{
+			UE_LOG(LogTemp, Warning, TEXT("xmlFile is not valid!"));
 			return;
 		}
 	}
 }
 
-
-struct FQuestConditions
+struct FCommands
 {
+	FString CommandString;
+	TArray<FString> Conditions;
 };
 
 struct FQuestStages
 {
+	int32 StageId;
+	FString StageName;
+	TArray<FString> Dialogue;
+	TArray<FCommands> Commands;
 };
 
 struct FQuest
 {
 	FString QuestID;
 	FString QuestName;
-	TArray<FQuestConditions> QuestWinConditions;
+	TArray<FString> QuestConditions;
 	TArray<FQuestStages> QuestStages;
 };
 
 void UQuestBuilder::CreateQuests()
 {
+	UE_LOG(LogTemp, Warning, TEXT("In Create Quests!"));
+	UE_LOG(LogTemp, Warning, TEXT("Number of xml files: %s"), *FString::FromInt(QuestXMLFiles.Num()));
 	for (FXmlFile * file : QuestXMLFiles)
 	{
-		// file->GetRootNode()->
+		//Make sure this is a quest file
+		if (!file->GetRootNode()->GetTag().Equals("Quest"))
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Not a quest file!"));
+			return;
+		}
+
+		FQuest * tmpNewQuest = new FQuest;
+
+		//Reads the quest nodes inside the <Quest> tag
+		for (FXmlNode * node : file->GetRootNode()->GetChildrenNodes())
+		{
+			if (node->GetTag().Equals("Conditions"))
+			{
+				for (FXmlNode * conditionNodes : node->GetChildrenNodes())
+				{
+					UE_LOG(LogTemp, Warning, TEXT("In XML Conditions"));
+					FString conditionStr;
+
+					if (conditionNodes->GetTag().Equals("HasItem"))
+					{
+						conditionStr += "HasItem,";
+						conditionStr += conditionNodes->GetAttribute("itemId");
+					}
+					else if (conditionNodes->GetTag().Equals("IsTrue"))
+					{
+						conditionStr += "IsTrue,";
+						conditionStr += conditionNodes->GetAttribute("condition") + ",";
+						conditionStr += conditionNodes->GetAttribute("variable") + ",";
+						conditionStr += conditionNodes->GetAttribute("value");
+					}
+					else if (conditionNodes->GetTag().Equals("IsFalse"))
+					{
+						conditionStr += "IsFalse,";
+						conditionStr += conditionNodes->GetAttribute("condition") + ",";
+						conditionStr += conditionNodes->GetAttribute("variable") + ",";
+						conditionStr += conditionNodes->GetAttribute("value");
+					}
+					else if (conditionNodes->GetTag().Equals("StageComplete"))
+					{
+						conditionStr += "StageComplete,";
+						conditionStr += conditionNodes->GetAttribute("id");
+					}
+					else
+					{
+						UE_LOG(LogTemp, Warning, TEXT("Unknown Quest Condition!"));
+					}
+
+					UE_LOG(LogTemp, Warning, TEXT("%s"), *conditionStr);
+				}
+			}
+			else if (node->GetTag().Equals("Stage"))
+			{
+
+			}
+			else
+			{
+
+			}
+		}
 	}
 }
 

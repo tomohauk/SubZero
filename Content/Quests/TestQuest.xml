@@ -10,8 +10,8 @@
     -->
     <HasItem itemId="62734"/><!--If the item has the item of id in their inventory. Suites simple fetch quests-->
     <IsTrue condition="e" variable="playerHealth" value="10"/><!--The Players health is a certain value-->
-    <IsFalse condition = "le" variable="playerStamina" value="10"/>
-    <StageCompleted id="0"/><!--If the stage with this ID has been completed-->
+    <IsFalse condition="le" variable="playerStamina" value="10"/>
+    <StageComplete id="0"/><!--If the stage with this ID has been completed-->
   </Conditions>
 
   <!--

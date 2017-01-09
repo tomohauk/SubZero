@@ -12,6 +12,7 @@
 #include "UI/DialogueWidget.h"
 #include "WidgetBlueprintLibrary.h"
 #include "SubZeroCharacter.h"
+#include "Public/QuestSystem/QuestBuilder.h"
 
 void ASubZeroCharacter::BeginPlay()
 {
@@ -27,6 +28,10 @@ void ASubZeroCharacter::BeginPlay()
 	{
 		PRINTSTRING("tmpInv invalid!");
 	}
+
+	UQuestBuilder * qb = NewObject<UQuestBuilder>();
+	qb->InitiateQuestBuilder();
+	qb->CreateQuests();
 }
 
 //////////////////////////////////////////////////////////////////////////
