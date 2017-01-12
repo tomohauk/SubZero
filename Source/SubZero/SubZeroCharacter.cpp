@@ -110,7 +110,6 @@ void ASubZeroCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerI
 	PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &ASubZeroCharacter::OnResetVR);
 }
 
-
 void ASubZeroCharacter::Tick(float DeltaSeconds)
 {
 	//Close dialogue widget after the player is 400 units away from target
@@ -141,7 +140,6 @@ void ASubZeroCharacter::Interact()
 	FCollisionQueryParams RV_TraceParams = FCollisionQueryParams(FName(TEXT("Trace")), true, this);
 	GetWorld()->LineTraceSingleByChannel(hitResults, StartPoint, EndPoint, ECC_Pawn,RV_TraceParams);
 	
-	//DrawDebugLine(GetWorld(), StartPoint, EndPoint, FColor::Red, true, -1.0f, 0, 2.0f);
 	if (hitResults.GetActor())
 	{
 		//Interaction with an NPC

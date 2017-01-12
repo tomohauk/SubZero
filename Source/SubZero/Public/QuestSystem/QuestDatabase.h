@@ -15,5 +15,4 @@ class SUBZERO_API UQuestDatabase : public UObject
 	
 	
 	
-	
 };
