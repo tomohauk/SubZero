@@ -108,7 +108,7 @@ void ASubZeroCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerI
 
 void ASubZeroCharacter::Tick(float DeltaSeconds)
 {
-	ACharacter::Tick(DelaSeconds);
+	ACharacter::Tick(DeltaSeconds);
 
 	//Close dialogue widget after the player is 400 units away from target
 	if (isInDialogue && IsValid(targetDialogueActor))
